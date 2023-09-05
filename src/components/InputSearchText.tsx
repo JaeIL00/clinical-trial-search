@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "../styles/InputSearchStyle.css";
+import { getSearchResult } from "../api/api";
 
 const InputSearchText = () => {
     const [searchText, setSearchText] = useState<string>("");
@@ -9,8 +10,9 @@ const InputSearchText = () => {
         setSearchText(value);
     };
 
-    const callSearchApi = (event: FormEvent<HTMLFormElement>) => {
+    const callSearchApi = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        await getSearchResult(searchText).then((res) => {});
     };
 
     return (
