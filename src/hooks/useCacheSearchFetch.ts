@@ -35,7 +35,7 @@ const useCacheSearchFetch = () => {
       .finally(() => setIsFetching(false));
   };
 
-  const dataExist = async (nowDate: number, deadDate: number, searchText: string) => {
+  const checkAvailableCache = async (nowDate: number, deadDate: number, searchText: string) => {
     const prevDate = cacheStorage[searchText].deadDate;
     const needFetch = nowDate > prevDate;
 
@@ -46,9 +46,13 @@ const useCacheSearchFetch = () => {
     }
   };
 
-  const cacheFetch = async (searchText: string) => {
+  const searchable = (searchText: string) => {
     const reg = new RegExp(SEARCH_CRITERIA_REG);
-    const stopSearch = reg.test(searchText);
+    return reg.test(searchText);
+  };
+
+  const cacheOrFetch = async (searchText: string) => {
+    const stopSearch = searchable(searchText);
     if (stopSearch) return setLocalData(null);
 
     setIsFetching(true);
@@ -58,13 +62,13 @@ const useCacheSearchFetch = () => {
     const deadDate = nowDate + CACHE_TIME;
 
     if (isExist) {
-      dataExist(nowDate, deadDate, searchText);
+      checkAvailableCache(nowDate, deadDate, searchText);
     } else {
       await fetch(deadDate, searchText);
     }
   };
 
-  return { isFetching, localData, error, isError, cacheFetch, remove };
+  return { isFetching, localData, error, isError, cacheOrFetch, remove };
 };
 
 export default useCacheSearchFetch;

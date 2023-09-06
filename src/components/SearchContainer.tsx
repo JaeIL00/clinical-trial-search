@@ -10,13 +10,13 @@ const SearchContainer = () => {
     error,
     isFetching,
     isError,
-    cacheFetch,
+    cacheOrFetch,
     remove: localDataReset,
   } = useCacheSearchFetch();
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const debounceSearchApiCall = useDebounce(cacheFetch, 400);
+  const debounceSearchApiCall = useDebounce(cacheOrFetch, 400);
 
   const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -27,7 +27,7 @@ const SearchContainer = () => {
   };
 
   const clickBtnSearchApi = () => {
-    cacheFetch(searchText);
+    cacheOrFetch(searchText);
   };
 
   useEffect(() => {
