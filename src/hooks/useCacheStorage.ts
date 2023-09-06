@@ -3,12 +3,20 @@ import { CacheContext } from "../provider/CacheProvider";
 import { getSearchApi } from "../api/api";
 import { SearchApiResponse } from "../types";
 
+interface ErrorTypes {
+    message: string;
+    name: string;
+    code: string;
+}
+
 const SEARCH_CRITERIA_REG = /^[ㄱ-ㅎa-zA-Z0-9]+$/;
 const CACHE_TIME = 300000;
 
 const useCacheSearchFetch = () => {
     const { cacheStorage, updateCache } = useContext(CacheContext);
 
+    const [error, setError] = useState<string>("");
+    const [isError, setIsError] = useState<boolean>(false);
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [localData, setLocalData] = useState<SearchApiResponse | null>(null);
 
@@ -20,7 +28,10 @@ const useCacheSearchFetch = () => {
                 updateCache(searchText, { data, deadDate });
                 setLocalData(data);
             })
-            .catch((error) => alert(error))
+            .catch((error: ErrorTypes) => {
+                setError(error.code);
+                setIsError(true);
+            })
             .finally(() => setIsFetching(false));
     };
 
@@ -57,7 +68,7 @@ const useCacheSearchFetch = () => {
         }
     };
 
-    return { isFetching, localData, cacheFetch, remove };
+    return { isFetching, localData, error, isError, cacheFetch, remove };
 };
 
 export default useCacheSearchFetch;

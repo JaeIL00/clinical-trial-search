@@ -1,18 +1,20 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import "../styles/InputSearchStyle.css";
 import useDebounce from "../hooks/useDebounce";
 import useCacheSearchFetch from "../hooks/useCacheStorage";
 import SearchResultList from "./SearchResultList";
 
 const SearchContainer = () => {
-    const [searchText, setSearchText] = useState<string>("");
-
     const {
-        isFetching,
         localData,
+        error,
+        isFetching,
+        isError,
         cacheFetch,
         remove: localDataReset,
     } = useCacheSearchFetch();
+
+    const [searchText, setSearchText] = useState<string>("");
 
     const debounceSearchApiCall = useDebounce(cacheFetch, 400);
 
@@ -27,6 +29,12 @@ const SearchContainer = () => {
     const clickBtnSearchApi = () => {
         cacheFetch(searchText);
     };
+
+    useEffect(() => {
+        if (isError) {
+            alert(error);
+        }
+    }, [isError]);
 
     return (
         <main>
