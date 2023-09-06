@@ -8,22 +8,25 @@ const SearchContainer = () => {
     const [searchText, setSearchText] = useState<string>("");
     const [completeUpdateText, setCompleteUpdateText] = useState<string>("");
 
-    const { cacheFetch, isFetching } = useCacheSearchFetch();
+    const { cacheFetch, isFetching } = useCacheSearchFetch({
+        cacheTime: 60000,
+    });
+
+    const debounceSearchApiCall = useDebounce(cacheFetch, 700);
+    const debounceTextUpdate = useDebounce(setCompleteUpdateText, 500);
 
     const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchText(value);
-        debounceTextUpdate(value);
+
         if (value) debounceSearchApiCall(value);
+        debounceTextUpdate(value);
     };
 
     const submitHandler = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         cacheFetch(searchText);
     };
-
-    const debounceSearchApiCall = useDebounce(cacheFetch, 700);
-    const debounceTextUpdate = useDebounce(setCompleteUpdateText, 500);
 
     return (
         <main>

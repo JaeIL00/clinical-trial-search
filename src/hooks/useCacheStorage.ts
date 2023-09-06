@@ -2,10 +2,13 @@ import { useContext, useState } from "react";
 import { CacheContext } from "../provider/CacheProvider";
 import { getSearchResult } from "../api/api";
 
-const CACHE_TIME = 100000;
+interface Params {
+    cacheTime: number;
+}
+
 const SEARCH_CRITERIA_REG = /^[ㄱ-ㅎa-zA-Z0-9]+$/;
 
-const useCacheSearchFetch = () => {
+const useCacheSearchFetch = ({ cacheTime }: Params) => {
     const cacheContext = useContext(CacheContext);
 
     const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -44,7 +47,7 @@ const useCacheSearchFetch = () => {
 
         const isExist = cacheContext.cacheStorage[searchText];
         const nowDate = new Date().getTime();
-        const deadDate = nowDate + CACHE_TIME;
+        const deadDate = nowDate + cacheTime;
 
         if (isExist) {
             dataExist(nowDate, deadDate, searchText);
