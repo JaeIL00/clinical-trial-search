@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { CacheContext } from "../provider/CacheProvider";
 import { getSearchApi } from "../api/api";
+import { SearchApiResponse } from "../types";
 
 interface Params {
     cacheTime: number;
@@ -12,17 +13,21 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
     const cacheContext = useContext(CacheContext);
 
     const [isFetching, setIsFetching] = useState<boolean>(false);
+    const [localData, setLocalData] = useState<SearchApiResponse>([]);
+
+    const remove = () => setLocalData([]);
 
     const fetch = async (deadDate: number, searchText: string) => {
         await getSearchApi(searchText)
             .then(({ data }) => {
                 cacheContext.updateCache(searchText, { data, deadDate });
+                setLocalData(data);
             })
             .catch((error) => alert(error))
             .finally(() => setIsFetching(false));
     };
 
-    const dataExist = (
+    const dataExist = async (
         nowDate: number,
         deadDate: number,
         searchText: string
@@ -30,14 +35,17 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
         const prevDate = cacheContext.cacheStorage[searchText].deadDate;
         const needFetch = nowDate > prevDate;
 
-        if (needFetch) fetch(deadDate, searchText);
-        else setIsFetching(false);
+        if (needFetch) await fetch(deadDate, searchText);
+        else {
+            setLocalData(cacheContext.cacheStorage[searchText].data);
+            setIsFetching(false);
+        }
     };
 
-    const cacheFetch = (searchText: string) => {
+    const cacheFetch = async (searchText: string) => {
         const reg = new RegExp(SEARCH_CRITERIA_REG);
         const stopSearch = reg.test(searchText);
-        if (stopSearch) return;
+        if (stopSearch) return setLocalData([]);
 
         setIsFetching(true);
 
@@ -48,11 +56,11 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
         if (isExist) {
             dataExist(nowDate, deadDate, searchText);
         } else {
-            fetch(deadDate, searchText);
+            await fetch(deadDate, searchText);
         }
     };
 
-    return { cacheFetch, isFetching };
+    return { isFetching, localData, cacheFetch, remove };
 };
 
 export default useCacheSearchFetch;
