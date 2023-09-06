@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import "../styles/InputSearchStyle.css";
 import useDebounce from "../hooks/useDebounce";
-import useCacheSearchFetch from "../hooks/useCacheStorage";
+import useCacheSearchFetch from "../hooks/useCacheSearchFetch";
 import SearchResultList from "./SearchResultList";
 
 const SearchContainer = () => {
