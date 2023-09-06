@@ -7,7 +7,7 @@ const SEARCH_CRITERIA_REG = /^[ㄱ-ㅎa-zA-Z0-9]+$/;
 const CACHE_TIME = 300000;
 
 const useCacheSearchFetch = () => {
-    const cacheContext = useContext(CacheContext);
+    const { cacheStorage, updateCache } = useContext(CacheContext);
 
     const [isFetching, setIsFetching] = useState<boolean>(false);
     const [localData, setLocalData] = useState<SearchApiResponse | null>(null);
@@ -17,7 +17,7 @@ const useCacheSearchFetch = () => {
     const fetch = async (deadDate: number, searchText: string) => {
         await getSearchApi(searchText)
             .then(({ data }) => {
-                cacheContext.updateCache(searchText, { data, deadDate });
+                updateCache(searchText, { data, deadDate });
                 setLocalData(data);
             })
             .catch((error) => alert(error))
@@ -29,12 +29,12 @@ const useCacheSearchFetch = () => {
         deadDate: number,
         searchText: string
     ) => {
-        const prevDate = cacheContext.cacheStorage[searchText].deadDate;
+        const prevDate = cacheStorage[searchText].deadDate;
         const needFetch = nowDate > prevDate;
 
         if (needFetch) await fetch(deadDate, searchText);
         else {
-            setLocalData(cacheContext.cacheStorage[searchText].data);
+            setLocalData(cacheStorage[searchText].data);
             setIsFetching(false);
         }
     };
@@ -46,7 +46,7 @@ const useCacheSearchFetch = () => {
 
         setIsFetching(true);
 
-        const isExist = cacheContext.cacheStorage[searchText];
+        const isExist = cacheStorage[searchText];
         const nowDate = new Date().getTime();
         const deadDate = nowDate + CACHE_TIME;
 
