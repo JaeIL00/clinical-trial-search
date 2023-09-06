@@ -12,9 +12,7 @@ const SearchContainer = () => {
         localData,
         cacheFetch,
         remove: localDataReset,
-    } = useCacheSearchFetch({
-        cacheTime: 6000,
-    });
+    } = useCacheSearchFetch();
 
     const debounceSearchApiCall = useDebounce(cacheFetch, 700);
 
