@@ -1,11 +1,11 @@
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import SearchContainer from './components/SearchContainer';
 import CacheProvider from './provider/CacheProvider';
 
 function App() {
   return (
     <CacheProvider>
-      <SearchContainer />
+      <Outlet />
     </CacheProvider>
   );
 }
