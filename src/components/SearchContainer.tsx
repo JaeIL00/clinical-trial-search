@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from "react";
-import "../styles/searchContainerStyle.css";
+import "../styles/searchContainerStyle.scss";
 import useDebounce from "../hooks/useDebounce";
 import useCacheSearchFetch from "../hooks/useCacheSearchFetch";
 import SearchResultList from "./SearchResultList";
@@ -37,10 +37,11 @@ const SearchContainer = () => {
     }, [isError]);
 
     return (
-        <main>
-            <section>
+        <main className="container">
+            <section className="inputBox">
                 <input
                     type="text"
+                    className="inputClass"
                     value={searchText}
                     onChange={changeSearchText}
                 />
@@ -53,7 +54,7 @@ const SearchContainer = () => {
                 </button>
             </section>
 
-            <section>
+            <section className="listBox">
                 {searchText ? (
                     <SearchResultList
                         resultData={localData}
