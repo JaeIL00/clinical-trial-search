@@ -14,7 +14,7 @@ const SearchContainer = () => {
         remove: localDataReset,
     } = useCacheSearchFetch();
 
-    const debounceSearchApiCall = useDebounce(cacheFetch, 700);
+    const debounceSearchApiCall = useDebounce(cacheFetch, 400);
 
     const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
