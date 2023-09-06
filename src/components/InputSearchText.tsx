@@ -6,7 +6,7 @@ import useCacheSearchFetch from "../hooks/useCacheStorage";
 const InputSearchText = () => {
     const [searchText, setSearchText] = useState<string>("");
 
-    const { cacheFetch } = useCacheSearchFetch();
+    const { cacheFetch, isFetching } = useCacheSearchFetch();
 
     const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -24,7 +24,9 @@ const InputSearchText = () => {
     return (
         <form onSubmit={submitHandler}>
             <input type="text" value={searchText} onChange={changeSearchText} />
-            <input type="submit" />
+            <button type="submit" disabled={isFetching}>
+                {isFetching ? "로딩중" : "검색"}
+            </button>
         </form>
     );
 };

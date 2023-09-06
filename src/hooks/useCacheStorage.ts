@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CacheContext } from "../provider/CacheProvider";
 import { getSearchResult } from "../api/api";
 
@@ -7,13 +7,16 @@ const CACHE_TIME = 10000;
 const useCacheSearchFetch = () => {
     const cacheContext = useContext(CacheContext);
 
+    const [isFetching, setIsFetching] = useState<boolean>(false);
+
     const fetch = async (deadDate: number, searchText: string) => {
         await getSearchResult(searchText)
             .then(({ data }) => {
                 console.log("fetch", data);
                 cacheContext.updateCache(searchText, { data, deadDate });
             })
-            .catch((error) => alert(error));
+            .catch((error) => alert(error))
+            .finally(() => setIsFetching(false));
     };
 
     const dataExist = (
@@ -26,6 +29,7 @@ const useCacheSearchFetch = () => {
 
         if (needFetch) fetch(deadDate, searchText);
         else {
+            setIsFetching(false);
             console.log("캐싱데이터", cacheContext.cacheStorage);
         }
     };
@@ -35,6 +39,8 @@ const useCacheSearchFetch = () => {
         const nowDate = new Date().getTime();
         const deadDate = nowDate + CACHE_TIME;
 
+        setIsFetching(true);
+
         if (isExist) {
             dataExist(nowDate, deadDate, searchText);
         } else {
@@ -42,7 +48,7 @@ const useCacheSearchFetch = () => {
         }
     };
 
-    return { cacheFetch };
+    return { cacheFetch, isFetching };
 };
 
 export default useCacheSearchFetch;
