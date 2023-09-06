@@ -17,7 +17,6 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
         await getSearchResult(searchText)
             .then(({ data }) => {
                 cacheContext.updateCache(searchText, { data, deadDate });
-                console.log("fetch", data);
             })
             .catch((error) => alert(error))
             .finally(() => setIsFetching(false));
@@ -32,10 +31,7 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
         const needFetch = nowDate > prevDate;
 
         if (needFetch) fetch(deadDate, searchText);
-        else {
-            console.log("캐싱데이터", cacheContext.cacheStorage);
-            setIsFetching(false);
-        }
+        else setIsFetching(false);
     };
 
     const cacheFetch = (searchText: string) => {

@@ -5,6 +5,8 @@ const axiosInstace = axios.create({
 });
 
 export const getSearchResult = async (searchText: string) => {
+    console.info("calling api");
+
     return await axiosInstace(`/sick?q=${searchText}`, {
         method: "get",
     });
