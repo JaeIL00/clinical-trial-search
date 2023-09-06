@@ -12,7 +12,7 @@ interface ErrorTypes {
 const SEARCH_CRITERIA_REG = /^[ㄱ-ㅎa-zA-Z0-9]+$/;
 const CACHE_TIME = 300000;
 
-const useCacheSearchFetch = () => {
+const useCacheFetch = () => {
   const { cacheStorage, updateCache } = useContext(CacheContext);
 
   const [error, setError] = useState<string>('');
@@ -71,4 +71,4 @@ const useCacheSearchFetch = () => {
   return { isFetching, localData, error, isError, cacheOrFetch, remove };
 };
 
-export default useCacheSearchFetch;
+export default useCacheFetch;

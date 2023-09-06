@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import '../styles/searchContainerStyle.scss';
 import useDebounce from '../hooks/useDebounce';
-import useCacheSearchFetch from '../hooks/useCacheSearchFetch';
+import useCacheFetch from '../hooks/useCacheFetch';
 import SearchResultList from './SearchResultList';
 
 const SearchContainer = () => {
@@ -12,7 +12,7 @@ const SearchContainer = () => {
     isError,
     cacheOrFetch,
     remove: localDataReset,
-  } = useCacheSearchFetch();
+  } = useCacheFetch();
 
   const [searchText, setSearchText] = useState<string>('');
 
