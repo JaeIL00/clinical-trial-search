@@ -1,4 +1,5 @@
 import { SearchApiResponse } from "../types";
+import "../styles/searchResultListStyle.scss";
 
 interface Props {
     resultData: SearchApiResponse | null;
@@ -14,7 +15,9 @@ const SearchResultList = ({ resultData, isFetching }: Props) => {
                 {resultData.length > 0 ? (
                     <>
                         {resultData.map((result) => (
-                            <li key={result.sickCd}>{result.sickNm}</li>
+                            <li key={result.sickCd} className="listItem">
+                                - {result.sickNm}
+                            </li>
                         ))}
                     </>
                 ) : (
