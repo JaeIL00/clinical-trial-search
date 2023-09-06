@@ -35,6 +35,7 @@ const SearchContainer = () => {
                 </button>
             </form>
             <SearchResultList searchText={searchText} />
+            {!searchText && <span>검색어를 입력해주세요</span>}
         </main>
     );
 };

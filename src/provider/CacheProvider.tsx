@@ -1,7 +1,15 @@
 import { ReactNode, createContext, useRef } from "react";
 
 export const CacheContext = createContext<{
-    cacheStorage: { [key: string]: any };
+    cacheStorage: {
+        [key: string]: {
+            data: {
+                sickCd: string;
+                sickNm: string;
+            }[];
+            deadDate: number;
+        };
+    };
     updateCache: (key: string, value: any) => void;
 }>({
     cacheStorage: {},

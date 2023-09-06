@@ -14,12 +14,20 @@ const SearchResultList = ({ searchText }: Props) => {
     const { cacheStorage } = useContext(CacheContext);
 
     if (cacheStorage[searchText]) {
+        const data = cacheStorage[searchText].data;
+
         return (
-            <ul>
-                {cacheStorage[searchText].data.map((result: ResultTypes) => (
-                    <li key={result.sickCd}>{result.sickNm}</li>
-                ))}
-            </ul>
+            <>
+                {data.length > 0 ? (
+                    <ul>
+                        {cacheStorage[searchText].data.map((result) => (
+                            <li key={result.sickCd}>{result.sickNm}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <div>추천 가능한 검색어는 없습니다</div>
+                )}
+            </>
         );
     }
 
