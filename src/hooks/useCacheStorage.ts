@@ -13,9 +13,9 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
     const cacheContext = useContext(CacheContext);
 
     const [isFetching, setIsFetching] = useState<boolean>(false);
-    const [localData, setLocalData] = useState<SearchApiResponse>([]);
+    const [localData, setLocalData] = useState<SearchApiResponse | null>(null);
 
-    const remove = () => setLocalData([]);
+    const remove = () => setLocalData(null);
 
     const fetch = async (deadDate: number, searchText: string) => {
         await getSearchApi(searchText)
@@ -45,7 +45,7 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
     const cacheFetch = async (searchText: string) => {
         const reg = new RegExp(SEARCH_CRITERIA_REG);
         const stopSearch = reg.test(searchText);
-        if (stopSearch) return setLocalData([]);
+        if (stopSearch) return setLocalData(null);
 
         setIsFetching(true);
 

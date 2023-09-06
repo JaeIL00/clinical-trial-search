@@ -22,6 +22,7 @@ const SearchContainer = () => {
         const value = event.target.value;
         setSearchText(value);
         localDataReset();
+
         if (value) debounceSearchApiCall(value);
     };
 
@@ -39,12 +40,15 @@ const SearchContainer = () => {
                     onChange={changeSearchText}
                 />
                 <button type="submit" disabled={isFetching}>
-                    {isFetching ? "로딩중" : "검색"}
+                    검색
                 </button>
             </form>
 
             {searchText ? (
-                <SearchResultList resultData={localData} />
+                <SearchResultList
+                    resultData={localData}
+                    isFetching={isFetching}
+                />
             ) : (
                 <span>검색어를 입력해주세요</span>
             )}
