@@ -24,7 +24,7 @@ const SearchContainer = () => {
         if (value) debounceSearchApiCall(value);
     };
 
-    const searchCallApi = () => {
+    const clickBtnSearchApi = () => {
         cacheFetch(searchText);
     };
 
@@ -37,8 +37,8 @@ const SearchContainer = () => {
                     onChange={changeSearchText}
                 />
                 <button
-                    type="submit"
-                    onClick={searchCallApi}
+                    type="button"
+                    onClick={clickBtnSearchApi}
                     disabled={isFetching}
                 >
                     검색
