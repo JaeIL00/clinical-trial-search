@@ -17,7 +17,6 @@ const useCacheFetch = () => {
 
   const [error, setError] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [localData, setLocalData] = useState<SearchApiResponse | null>(null);
 
   const remove = () => setLocalData(null);
@@ -31,8 +30,7 @@ const useCacheFetch = () => {
       .catch((error: ErrorTypes) => {
         setError(error.code);
         setIsError(true);
-      })
-      .finally(() => setIsFetching(false));
+      });
   };
 
   const checkAvailableCache = async (nowDate: number, deadDate: number, searchText: string) => {
@@ -42,7 +40,6 @@ const useCacheFetch = () => {
     if (needFetch) await fetch(deadDate, searchText);
     else {
       setLocalData(cacheStorage[searchText].data);
-      setIsFetching(false);
     }
   };
 
@@ -55,8 +52,6 @@ const useCacheFetch = () => {
     const stopSearch = searchable(searchText);
     if (stopSearch) return setLocalData(null);
 
-    setIsFetching(true);
-
     const isExist = cacheStorage[searchText];
     const nowDate = new Date().getTime();
     const deadDate = nowDate + CACHE_TIME;
@@ -68,7 +63,7 @@ const useCacheFetch = () => {
     }
   };
 
-  return { isFetching, localData, error, isError, cacheOrFetch, remove };
+  return { localData, error, isError, cacheOrFetch, remove };
 };
 
 export default useCacheFetch;

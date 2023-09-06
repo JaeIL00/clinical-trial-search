@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   resultData: SearchApiResponse | null;
-  isFetching: boolean;
 }
 
 const KEYBOARD_MOVE_NUMBER = 1;
 const IDX_PLUS = 1;
 
-const SearchResultList = ({ resultData, isFetching }: Props) => {
+const SearchResultList = ({ resultData }: Props) => {
   const listUlRef = useRef<HTMLUListElement>(null);
 
   const [selectItem, setSelectItem] = useState<number>(0);
@@ -35,17 +34,20 @@ const SearchResultList = ({ resultData, isFetching }: Props) => {
     }
   };
 
+  const initSelectItem = () => {
+    setSelectItem(0);
+  };
+
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
 
-    moveScroll();
-
+    initSelectItem();
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [resultData, selectItem]);
+  }, [resultData]);
 
-  if (isFetching) return <span>로딩 중....</span>;
+  useEffect(moveScroll, [selectItem]);
 
   if (resultData)
     return (

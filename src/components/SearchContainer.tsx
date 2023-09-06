@@ -5,14 +5,7 @@ import useCacheFetch from '../hooks/useCacheFetch';
 import SearchResultList from './SearchResultList';
 
 const SearchContainer = () => {
-  const {
-    localData,
-    error,
-    isFetching,
-    isError,
-    cacheOrFetch,
-    remove: localDataReset,
-  } = useCacheFetch();
+  const { localData, error, isError, cacheOrFetch, remove: localDataReset } = useCacheFetch();
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -43,14 +36,14 @@ const SearchContainer = () => {
       </header>
       <section className="inputBox">
         <input type="text" className="inputClass" value={searchText} onChange={changeSearchText} />
-        <button type="button" onClick={clickBtnSearchApi} disabled={isFetching}>
+        <button type="button" onClick={clickBtnSearchApi}>
           검색
         </button>
       </section>
 
       <section className="listBox">
         {searchText ? (
-          <SearchResultList resultData={localData} isFetching={isFetching} />
+          <SearchResultList resultData={localData} />
         ) : (
           <span>검색어를 입력해주세요</span>
         )}
