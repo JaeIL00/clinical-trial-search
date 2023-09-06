@@ -38,6 +38,9 @@ const SearchContainer = () => {
 
   return (
     <main className="container">
+      <header className="headerStyle">
+        <h1>국내 모든 임상시험 검색하고 온라인으로 참여하기</h1>
+      </header>
       <section className="inputBox">
         <input type="text" className="inputClass" value={searchText} onChange={changeSearchText} />
         <button type="button" onClick={clickBtnSearchApi} disabled={isFetching}>
