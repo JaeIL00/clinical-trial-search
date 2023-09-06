@@ -3,12 +3,13 @@ import { CacheContext } from "../provider/CacheProvider";
 
 interface Props {
     searchText: string;
+    isFetching: boolean;
 }
 
-const SearchResultList = ({ searchText }: Props) => {
+const SearchResultList = ({ searchText, isFetching }: Props) => {
     const { cacheStorage } = useContext(CacheContext);
 
-    if (cacheStorage[searchText]) {
+    if (!isFetching && cacheStorage[searchText]) {
         const data = cacheStorage[searchText].data;
 
         return (

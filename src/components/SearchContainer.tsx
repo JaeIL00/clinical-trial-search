@@ -38,7 +38,10 @@ const SearchContainer = () => {
                 </button>
             </form>
 
-            <SearchResultList searchText={completeUpdateText} />
+            <SearchResultList
+                searchText={completeUpdateText}
+                isFetching={isFetching}
+            />
 
             {!completeUpdateText && <span>검색어를 입력해주세요</span>}
         </main>
