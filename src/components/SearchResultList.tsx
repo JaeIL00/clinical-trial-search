@@ -23,7 +23,7 @@ const SearchResultList = ({ searchText }: Props) => {
         );
     }
 
-    return <div></div>;
+    return <></>;
 };
 
 export default SearchResultList;

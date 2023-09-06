@@ -3,6 +3,7 @@ import { CacheContext } from "../provider/CacheProvider";
 import { getSearchResult } from "../api/api";
 
 const CACHE_TIME = 10000;
+const SEARCH_CRITERIA_REG = /^[ㄱ-ㅎa-zA-Z0-9]+$/;
 
 const useCacheSearchFetch = () => {
     const cacheContext = useContext(CacheContext);
@@ -35,6 +36,10 @@ const useCacheSearchFetch = () => {
     };
 
     const cacheFetch = async (searchText: string) => {
+        const reg = new RegExp(SEARCH_CRITERIA_REG);
+        const stopSearch = reg.test(searchText);
+        if (stopSearch) return;
+
         const isExist = cacheContext.cacheStorage[searchText];
         const nowDate = new Date().getTime();
         const deadDate = nowDate + CACHE_TIME;
