@@ -1,11 +1,11 @@
 import "./App.css";
-import InputSearchText from "./components/InputSearchText";
+import SearchContainer from "./components/SearchContainer";
 import CacheProvider from "./provider/CacheProvider";
 
 function App() {
     return (
         <CacheProvider>
-            <InputSearchText />
+            <SearchContainer />
         </CacheProvider>
     );
 }
