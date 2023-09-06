@@ -1,18 +1,18 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
 type DelayType = number;
 
 const useDebounce = <Params extends any[]>(
-    callback: (...args: Params) => any,
-    delay: DelayType
+  callback: (...args: Params) => any,
+  delay: DelayType,
 ) => {
-    const timer = useRef<number>();
+  const timer = useRef<number>();
 
-    return (...args: Params) => {
-        clearTimeout(timer.current);
+  return (...args: Params) => {
+    clearTimeout(timer.current);
 
-        timer.current = setTimeout(() => callback(...args), delay);
-    };
+    timer.current = setTimeout(() => callback(...args), delay);
+  };
 };
 
 export default useDebounce;
