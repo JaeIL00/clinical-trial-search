@@ -1,17 +1,7 @@
 import { ReactNode, createContext, useRef } from "react";
+import { CacheContextTypes } from "../types";
 
-export const CacheContext = createContext<{
-    cacheStorage: {
-        [key: string]: {
-            data: {
-                sickCd: string;
-                sickNm: string;
-            }[];
-            deadDate: number;
-        };
-    };
-    updateCache: (key: string, value: any) => void;
-}>({
+export const CacheContext = createContext<CacheContextTypes>({
     cacheStorage: {},
     updateCache: () => {},
 });

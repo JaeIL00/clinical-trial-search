@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { CacheContext } from "../provider/CacheProvider";
-import { getSearchResult } from "../api/api";
+import { getSearchApi } from "../api/api";
 
 interface Params {
     cacheTime: number;
@@ -14,7 +14,7 @@ const useCacheSearchFetch = ({ cacheTime }: Params) => {
     const [isFetching, setIsFetching] = useState<boolean>(false);
 
     const fetch = async (deadDate: number, searchText: string) => {
-        await getSearchResult(searchText)
+        await getSearchApi(searchText)
             .then(({ data }) => {
                 cacheContext.updateCache(searchText, { data, deadDate });
             })
