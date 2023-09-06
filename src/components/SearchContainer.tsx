@@ -6,12 +6,14 @@ import SearchResultList from "./SearchResultList";
 
 const SearchContainer = () => {
     const [searchText, setSearchText] = useState<string>("");
+    const [completeUpdateText, setCompleteUpdateText] = useState<string>("");
 
     const { cacheFetch, isFetching } = useCacheSearchFetch();
 
     const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchText(value);
+        debounceTextUpdate(value);
         if (value) debounceSearchApiCall(value);
     };
 
@@ -21,6 +23,7 @@ const SearchContainer = () => {
     };
 
     const debounceSearchApiCall = useDebounce(cacheFetch, 700);
+    const debounceTextUpdate = useDebounce(setCompleteUpdateText, 500);
 
     return (
         <main>
@@ -34,8 +37,10 @@ const SearchContainer = () => {
                     {isFetching ? "로딩중" : "검색"}
                 </button>
             </form>
-            <SearchResultList searchText={searchText} />
-            {!searchText && <span>검색어를 입력해주세요</span>}
+
+            <SearchResultList searchText={completeUpdateText} />
+
+            {!completeUpdateText && <span>검색어를 입력해주세요</span>}
         </main>
     );
 };
