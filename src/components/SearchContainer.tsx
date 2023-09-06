@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import "../styles/InputSearchStyle.css";
 import useDebounce from "../hooks/useDebounce";
 import useCacheSearchFetch from "../hooks/useCacheStorage";
@@ -26,32 +26,37 @@ const SearchContainer = () => {
         if (value) debounceSearchApiCall(value);
     };
 
-    const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const searchCallApi = () => {
         cacheFetch(searchText);
     };
 
     return (
         <main>
-            <form onSubmit={submitHandler}>
+            <section>
                 <input
                     type="text"
                     value={searchText}
                     onChange={changeSearchText}
                 />
-                <button type="submit" disabled={isFetching}>
+                <button
+                    type="submit"
+                    onClick={searchCallApi}
+                    disabled={isFetching}
+                >
                     검색
                 </button>
-            </form>
+            </section>
 
-            {searchText ? (
-                <SearchResultList
-                    resultData={localData}
-                    isFetching={isFetching}
-                />
-            ) : (
-                <span>검색어를 입력해주세요</span>
-            )}
+            <section>
+                {searchText ? (
+                    <SearchResultList
+                        resultData={localData}
+                        isFetching={isFetching}
+                    />
+                ) : (
+                    <span>검색어를 입력해주세요</span>
+                )}
+            </section>
         </main>
     );
 };
