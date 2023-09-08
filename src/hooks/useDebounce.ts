@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-
-type DelayType = number;
+import { DelayType } from '../types';
 
 const useDebounce = <Params extends any[]>(
   callback: (...args: Params) => any,

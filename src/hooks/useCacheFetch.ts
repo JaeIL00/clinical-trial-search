@@ -1,14 +1,8 @@
 import { useContext, useState } from 'react';
 import { CacheContext } from '../provider/CacheProvider';
 import { getSearchApi } from '../api/api';
-import { SearchApiResponse } from '../types';
+import { ErrorTypes, SearchApiResponse } from '../types';
 import { CACHE_TIME, SEARCH_CRITERIA_REG } from '../constants';
-
-interface ErrorTypes {
-  message: string;
-  name: string;
-  code: string;
-}
 
 const useCacheFetch = () => {
   const { cacheStorage, updateCache } = useContext(CacheContext);

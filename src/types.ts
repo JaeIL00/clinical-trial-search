@@ -12,3 +12,11 @@ export interface CacheContextTypes {
   };
   updateCache: (key: string, value: any) => void;
 }
+
+export interface ErrorTypes {
+  message: string;
+  name: string;
+  code: string;
+}
+
+export type DelayType = number;
