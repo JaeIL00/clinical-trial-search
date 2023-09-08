@@ -1,15 +1,18 @@
 import { SearchApiResponse } from '../types';
 import '../styles/searchResultListStyle.scss';
 import { useEffect, useRef, useState } from 'react';
+import {
+  IDX_PLUS,
+  KEYBOARD_ARROW_DOWN,
+  KEYBOARD_ARROW_UP,
+  KEYBOARD_MOVE_NUMBER,
+  LIST_ITEM_HEIGHT,
+  MIN_IDX,
+} from '../constants';
 
 interface Props {
   resultData: SearchApiResponse | null;
 }
-
-const KEYBOARD_MOVE_NUMBER = 1;
-const IDX_PLUS = 1;
-const MIN_IDX = 1;
-const LIST_ITEM_HEIGHT = 40;
 
 const SearchResultList = ({ resultData }: Props) => {
   const listUlRef = useRef<HTMLUListElement>(null);
@@ -18,11 +21,11 @@ const SearchResultList = ({ resultData }: Props) => {
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (resultData) {
-      if (event.key === 'ArrowUp') {
+      if (event.key === KEYBOARD_ARROW_UP) {
         setSelectItem((prev) => {
           return prev === MIN_IDX ? MIN_IDX : prev - KEYBOARD_MOVE_NUMBER;
         });
-      } else if (event.key === 'ArrowDown') {
+      } else if (event.key === KEYBOARD_ARROW_DOWN) {
         setSelectItem((prev) => {
           return prev === resultData.length ? prev : prev + KEYBOARD_MOVE_NUMBER;
         });

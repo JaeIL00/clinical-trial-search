@@ -3,8 +3,7 @@ import '../styles/searchContainerStyle.scss';
 import useDebounce from '../hooks/useDebounce';
 import useCacheFetch from '../hooks/useCacheFetch';
 import SearchResultList from './SearchResultList';
-
-const DELAY_TIME = 400;
+import { DELAY_TIME } from '../constants';
 
 const SearchContainer = () => {
   const { localData, error, isError, cacheOrFetch, remove: localDataReset } = useCacheFetch();
