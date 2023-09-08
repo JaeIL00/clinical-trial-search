@@ -16,7 +16,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-
+    .formBox {
+      flex: 1;
+      display: flex;
+    }
     .inputClass {
       flex: 1;
     }

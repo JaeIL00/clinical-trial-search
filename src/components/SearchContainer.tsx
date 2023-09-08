@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect, FormEvent } from 'react';
 import '../styles/searchContainerStyle.scss';
 import useDebounce from '../hooks/useDebounce';
 import useCacheFetch from '../hooks/useCacheFetch';
@@ -20,7 +20,8 @@ const SearchContainer = () => {
     if (value) debounceSearchApiCall(value);
   };
 
-  const clickBtnSearchApi = () => {
+  const searchFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     cacheOrFetch(searchText);
   };
 
@@ -36,10 +37,15 @@ const SearchContainer = () => {
         <h1>국내 모든 임상시험 검색하고 온라인으로 참여하기</h1>
       </header>
       <section className="inputBox">
-        <input type="text" className="inputClass" value={searchText} onChange={changeSearchText} />
-        <button type="button" onClick={clickBtnSearchApi}>
-          검색
-        </button>
+        <form className="formBox" onSubmit={searchFormSubmit}>
+          <input
+            type="text"
+            className="inputClass"
+            value={searchText}
+            onChange={changeSearchText}
+          />
+          <button type="submit">검색</button>
+        </form>
       </section>
 
       <section className="listBox">
