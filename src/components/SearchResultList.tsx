@@ -8,6 +8,8 @@ interface Props {
 
 const KEYBOARD_MOVE_NUMBER = 1;
 const IDX_PLUS = 1;
+const MIN_IDX = 1;
+const LIST_ITEM_HEIGHT = 40;
 
 const SearchResultList = ({ resultData }: Props) => {
   const listUlRef = useRef<HTMLUListElement>(null);
@@ -18,7 +20,7 @@ const SearchResultList = ({ resultData }: Props) => {
     if (resultData) {
       if (event.key === 'ArrowUp') {
         setSelectItem((prev) => {
-          return prev === 1 ? 1 : prev - KEYBOARD_MOVE_NUMBER;
+          return prev === MIN_IDX ? MIN_IDX : prev - KEYBOARD_MOVE_NUMBER;
         });
       } else if (event.key === 'ArrowDown') {
         setSelectItem((prev) => {
@@ -30,7 +32,7 @@ const SearchResultList = ({ resultData }: Props) => {
 
   const moveScroll = () => {
     if (listUlRef.current) {
-      listUlRef.current.scrollTop = 40 * selectItem - 40;
+      listUlRef.current.scrollTop = LIST_ITEM_HEIGHT * selectItem - LIST_ITEM_HEIGHT;
     }
   };
 

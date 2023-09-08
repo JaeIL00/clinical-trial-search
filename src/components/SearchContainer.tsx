@@ -4,12 +4,14 @@ import useDebounce from '../hooks/useDebounce';
 import useCacheFetch from '../hooks/useCacheFetch';
 import SearchResultList from './SearchResultList';
 
+const DELAY_TIME = 400;
+
 const SearchContainer = () => {
   const { localData, error, isError, cacheOrFetch, remove: localDataReset } = useCacheFetch();
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const debounceSearchApiCall = useDebounce(cacheOrFetch, 400);
+  const debounceSearchApiCall = useDebounce(cacheOrFetch, DELAY_TIME);
 
   const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
