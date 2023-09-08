@@ -57,18 +57,17 @@ npm start
 
     - [useCacheFetch](https://github.com/JaeIL00/clinical-trial-search/blob/main/src/hooks/useCacheFetch.ts) 커스텀훅에서 캐시 데이터 Stale한지 판단 및 API Call
 
-          1. 검색이 가능한 문구인지 정규식 검사 구현 (`/^[ㄱ-ㅎa-zA-Z0-9]+$/`)
-          1. cacheStorage에 입력한 검색어와 동일한 객체 Key가 있는지 검사 구현
-          1. 동일한 검색어라면 함께 저장된 ms단위의 date 값을 현재 시간과 비교하여 stale한 데이터인지 판단
-          1. stale하다면 API Call하여 최신 데이터 storage 저장 및 UI 컴포넌트로 전달
-
+      1. 검색이 가능한 문구인지 정규식 검사 구현 (`/^[ㄱ-ㅎa-zA-Z0-9]+$/`)
+      1. cacheStorage에 입력한 검색어와 동일한 객체 Key가 있는지 검사 구현
+      1. 동일한 검색어라면 함께 저장된 ms단위의 date 값을 현재 시간과 비교하여 stale한 데이터인지 판단
+      1. stale하다면 API Call하여 최신 데이터 storage 저장 및 UI 컴포넌트로 전달
       1. UI 컴포넌트로 전달되는 데이터는 useState로 관리하여 리렌더링 유발
-         1. 에러 발생 시 UI 컴포넌트로 `error message return` 및 `error message alert`
+      1. 에러 발생 시 UI 컴포넌트로 `error message return` 및 `error message alert`
 
     - 키보드 방향키로 추천 검색어 선택 가능
       1. `window.addEventListener` keydown 타입 이벤트 등록
       1. Keydown 동작으로 update되는 State 값과 목록 인덱스 값 넘버가 일치하는 요소의 스타일 변화
-         1. 선택한 추천 검색어는 화면에서 벗어나지 않도록 Scroll 자동 이동 구현
+      1. 선택한 추천 검색어는 화면에서 벗어나지 않도록 Scroll 자동 이동 구현
 
 1.  [캐싱 기능 구현](https://github.com/JaeIL00/clinical-trial-search/blob/main/src/provider/CacheProvider.tsx)
     - 외부 상황에 의존적이지 않고 데이터를 온전히 다루기 위해 브라우저 Storage를 사용하지 않음. `context API` 사용
